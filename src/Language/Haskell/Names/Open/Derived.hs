@@ -87,6 +87,8 @@ deriveGTraversable ''Context
 
 deriveGTraversable ''Asst
 
+deriveGTraversable ''Constraint
+
 deriveGTraversable ''Literal
 
 deriveGTraversable ''Exp
