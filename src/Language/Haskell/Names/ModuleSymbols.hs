@@ -107,6 +107,8 @@ getTopDeclSymbols impTbl modulename d = (case d of
           GadtDecl _ cn _ _ (fromMaybe [] -> fields) _ty <- gadtDecls
           return (cn , [f | FieldDecl _ fNames _ <- fields, f <- fNames])
 
+    PieceCatDecl _ category -> [ PieceCategory (dropAnn modulename) (dropAnn category) ]
+
     _ -> [])
         where
             declHeadSymbol c dh = c (dropAnn modulename) (dropAnn (getDeclHeadName dh))

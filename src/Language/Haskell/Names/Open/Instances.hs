@@ -84,6 +84,10 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Decl l) where
           <| sc'       -: mOverlap
           <| sc'       -: rule
           <| sc'       -: mInstDecls
+      PieceCatDecl l category ->
+        c PieceCatDecl
+          <| sc            -: l
+          <| binderC sc -: category
       _ -> defaultRtraverse e sc
 
 

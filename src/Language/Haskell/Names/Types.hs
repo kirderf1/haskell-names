@@ -82,6 +82,11 @@ data Symbol
       , patternConstructorName :: Name ()
       }
       -- ^ pattern synonym selector
+    | PieceCategory
+      { symbolModule :: ModuleName ()
+      , symbolName :: Name ()
+      }
+      -- ^ piece category from composable types
     deriving (Eq, Ord, Show, Data, Typeable)
 
 -- | A map from module name to list of symbols it exports.
@@ -118,6 +123,8 @@ data NameInfo l
       -- ^ wildcard in a record construction expression. The list contains
       -- resolved names of the fields and information about values
       -- assigned to those fields.
+    | CatBinder
+      -- ^ here a new piece category is declared.
     | None
       -- ^ no annotation
     | ScopeError  (Error l)

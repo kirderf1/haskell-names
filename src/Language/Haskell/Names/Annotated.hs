@@ -143,6 +143,8 @@ lookupName name scope = Scoped nameInfo (ann name) where
 
       BindingT -> TypeBinder
 
+      BindingC -> CatBinder
+
       _ -> None
 
     Just PatSynLeftHandSide -> case getL nameCtx scope of
