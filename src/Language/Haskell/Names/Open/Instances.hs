@@ -110,7 +110,14 @@ instanceHeadClass (IHParen _ instHead) = instanceHeadClass instHead
 instanceHeadClass (IHApp _ instHead _) = instanceHeadClass instHead
 
 instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Type l) where
-  rtraverse e sc = defaultRtraverse e (exprT sc)
+  rtraverse e sc =
+    case e of
+      TyComp l cat pieces ->
+        c TyComp
+          <| sc       -: l
+          <| exprC sc -: cat
+          <| exprP sc -: pieces
+      _ -> defaultRtraverse e (exprT sc)
 
 instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (DeclHead l) where
   rtraverse e sc =

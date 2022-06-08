@@ -99,6 +99,8 @@ lookupQName qname scope = Scoped nameInfo (ann qname) where
 
       ReferenceC -> checkUniqueness (Global.lookupCategory qname globalTable)
 
+      ReferenceP -> checkUniqueness (Global.lookupPiece qname globalTable)
+
       _ -> None
 
     Just PatSynLeftHandSide -> case getL nameCtx scope of

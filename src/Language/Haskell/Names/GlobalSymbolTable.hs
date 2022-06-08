@@ -42,6 +42,9 @@ lookupSelector qn = filter isSelector . lookupName qn
 lookupCategory :: QName l -> Table -> [Symbol]
 lookupCategory qn = filter isCategory . lookupName qn
 
+lookupPiece :: QName l -> Table -> [Symbol]
+lookupPiece qn = filter isPiece . lookupName qn
+
 lookupName ::  QName l -> Table -> [Symbol]
 lookupName qn table = fromMaybe [] (Map.lookup (dropAnn qn) table)
 
@@ -81,6 +84,11 @@ isSelector symbol = case symbol of
 isCategory :: Symbol -> Bool
 isCategory symbol = case symbol of
     PieceCategory {} -> True
+    _ -> False
+
+isPiece :: Symbol -> Bool
+isPiece symbol = case symbol of
+    Piece {} -> True
     _ -> False
 
 fromList :: [(QName (),Symbol)] -> Table

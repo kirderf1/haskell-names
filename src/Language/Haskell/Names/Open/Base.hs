@@ -42,10 +42,12 @@ data NameContext
       -- refers to a value bound in the same module.
   |BindingC
       -- ^ Binding of a piece category from composable types
-  |ReferenceC
-      -- ^ Reference a piece category from composable types
   |BindingP
       -- ^ Binding of a data type piece from composable types
+  |ReferenceC
+      -- ^ Reference a piece category from composable types
+  |ReferenceP
+      -- ^ Reference a data type piece from composable types
   | Other
 
 -- | Pattern synonyms can work in different modes depending on if we are on the
@@ -181,6 +183,9 @@ binderP = setNameCtx BindingP
 
 exprC :: Scope -> Scope
 exprC = setNameCtx ReferenceC
+
+exprP :: Scope -> Scope
+exprP = setNameCtx ReferenceP
 
 setInstClassName :: Maybe (QName ()) -> Scope -> Scope
 setInstClassName m = setL instClassName m
