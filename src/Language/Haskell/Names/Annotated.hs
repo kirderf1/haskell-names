@@ -81,7 +81,11 @@ lookupQName qname scope = Scoped nameInfo (ann qname) where
           checkUniqueness (Global.lookupValue qname globalTable)
 
       ReferenceT ->
-        checkUniqueness (Global.lookupType qname globalTable)
+        if Just (dropAnn qname) == maybeCat
+          then CatReference
+          else typeLookup where
+        maybeCat = getL pieceCatName scope
+        typeLookup = checkUniqueness (Global.lookupType qname globalTable)
 
       ReferenceUT ->
         checkUniqueness (Global.lookupMethodOrAssociate qname' globalTable) where
@@ -92,6 +96,8 @@ lookupQName qname scope = Scoped nameInfo (ann qname) where
 
       ReferenceRS ->
         checkUniqueness (Global.lookupSelector qname globalTable)
+
+      ReferenceC -> checkUniqueness (Global.lookupCategory qname globalTable)
 
       _ -> None
 
@@ -144,6 +150,8 @@ lookupName name scope = Scoped nameInfo (ann name) where
       BindingT -> TypeBinder
 
       BindingC -> CatBinder
+
+      BindingP -> PieceBinder
 
       _ -> None
 

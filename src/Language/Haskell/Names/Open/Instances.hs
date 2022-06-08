@@ -86,8 +86,16 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Decl l) where
           <| sc'       -: mInstDecls
       PieceCatDecl l category ->
         c PieceCatDecl
-          <| sc            -: l
+          <| sc         -: l
           <| binderC sc -: category
+      PieceDecl l category pieceName cons derives ->
+        let sc' = setPieceCatName (Just (dropAnn category)) sc
+        in c PieceDecl
+          <| sc'         -: l
+          <| exprC sc'   -: category
+          <| binderP sc' -: pieceName
+          <| sc'         -: cons
+          <| sc'         -: derives
       _ -> defaultRtraverse e sc
 
 

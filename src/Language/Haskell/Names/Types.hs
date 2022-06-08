@@ -87,6 +87,12 @@ data Symbol
       , symbolName :: Name ()
       }
       -- ^ piece category from composable types
+    | Piece
+      { symbolModule :: ModuleName ()
+      , symbolName :: Name ()
+      , categoryName :: QName ()
+      }
+      -- ^ data type piece from composable types
     deriving (Eq, Ord, Show, Data, Typeable)
 
 -- | A map from module name to list of symbols it exports.
@@ -125,6 +131,10 @@ data NameInfo l
       -- assigned to those fields.
     | CatBinder
       -- ^ here a new piece category is declared.
+    | PieceBinder
+      -- ^ here a new data type piece is declared.
+    | CatReference
+      -- ^ a reference to the recursive category type in a piece
     | None
       -- ^ no annotation
     | ScopeError  (Error l)
