@@ -155,6 +155,8 @@ lookupName name scope = Scoped nameInfo (ann name) where
 
       BindingP -> PieceBinder
 
+      SignatureE -> ExtensibleBinder
+
       _ -> None
 
     Just PatSynLeftHandSide -> case getL nameCtx scope of

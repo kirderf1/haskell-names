@@ -96,6 +96,13 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Decl l) where
           <| binderP sc' -: pieceName
           <| sc'         -: cons
           <| sc'         -: derives
+      CompFunDecl l names maybeContext category ty ->
+        c CompFunDecl
+          <| sc -: l
+          <| signatureE sc -: names
+          <| sc            -: maybeContext
+          <| exprC sc      -: category
+          <| sc            -: ty
       _ -> defaultRtraverse e sc
 
 

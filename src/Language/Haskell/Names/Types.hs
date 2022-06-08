@@ -93,6 +93,12 @@ data Symbol
       , categoryName :: QName ()
       }
       -- ^ data type piece from composable types
+    | ExtFunction
+      { symbolModule :: ModuleName ()
+      , symbolName :: Name ()
+      , categoryName :: QName ()
+      }
+      -- ^ extensible function from composable types
     deriving (Eq, Ord, Show, Data, Typeable)
 
 -- | A map from module name to list of symbols it exports.
@@ -130,11 +136,13 @@ data NameInfo l
       -- resolved names of the fields and information about values
       -- assigned to those fields.
     | CatBinder
-      -- ^ here a new piece category is declared.
+      -- ^ where a new piece category is declared
     | PieceBinder
-      -- ^ here a new data type piece is declared.
+      -- ^ where a new data type piece is declared
     | CatReference
       -- ^ a reference to the recursive category type in a piece
+    | ExtensibleBinder
+      -- ^ where a new extensible function is declared
     | None
       -- ^ no annotation
     | ScopeError  (Error l)

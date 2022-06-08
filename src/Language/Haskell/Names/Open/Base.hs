@@ -40,14 +40,16 @@ data NameContext
   | SignatureV
       -- ^ A type signature contains an always unqualified 'Name' that always
       -- refers to a value bound in the same module.
-  |BindingC
+  | BindingC
       -- ^ Binding of a piece category from composable types
-  |BindingP
+  | BindingP
       -- ^ Binding of a data type piece from composable types
-  |ReferenceC
+  | ReferenceC
       -- ^ Reference a piece category from composable types
-  |ReferenceP
+  | ReferenceP
       -- ^ Reference a data type piece from composable types
+  | SignatureE
+      -- ^ Define an extensible function from composable types
   | Other
 
 -- | Pattern synonyms can work in different modes depending on if we are on the
@@ -186,6 +188,9 @@ exprC = setNameCtx ReferenceC
 
 exprP :: Scope -> Scope
 exprP = setNameCtx ReferenceP
+
+signatureE :: Scope -> Scope
+signatureE = setNameCtx SignatureE
 
 setInstClassName :: Maybe (QName ()) -> Scope -> Scope
 setInstClassName m = setL instClassName m

@@ -113,6 +113,9 @@ getTopDeclSymbols impTbl modulename d = (case d of
         piece = Piece (dropAnn modulename) (dropAnn pieceName) (dropAnn category)
         infos = constructorsToInfos modulename pieceName $ qualConDeclNames qualConDecls
 
+    CompFunDecl _ names _ category _ -> map nameToInfo names where
+        nameToInfo name = ExtFunction (dropAnn modulename) (dropAnn name) (dropAnn category)
+
     _ -> [])
         where
             declHeadSymbol c dh = c (dropAnn modulename) (dropAnn (getDeclHeadName dh))
