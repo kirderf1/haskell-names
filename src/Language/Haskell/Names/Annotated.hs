@@ -138,10 +138,14 @@ lookupName name scope = Scoped nameInfo (ann name) where
     Nothing -> case getL nameCtx scope of
 
       ReferenceUV ->
-        disambiguateMethod maybeClassName qname (Global.lookupMethodOrAssociate qname globalTable) where
+        maybe instanceInfo extInfo maybeExtName where
+          instanceInfo = disambiguateMethod maybeClassName qname (Global.lookupMethodOrAssociate qname globalTable)
           qname = qualifyName maybeQualification name
           maybeQualification = maybe Nothing nameQualification maybeClassName
           maybeClassName = getL instClassName scope
+          extInfo extName | qNameToName extName == dropAnn name = ExtensionBinder
+                          | otherwise = ScopeError (EInternal "invalid method in extension")
+          maybeExtName = getL extensionName scope
 
       SignatureV ->
         checkUniqueness qname (Global.lookupValue qname globalTable) where
@@ -154,6 +158,10 @@ lookupName name scope = Scoped nameInfo (ann name) where
       BindingC -> CatBinder
 
       BindingP -> PieceBinder
+
+      BindingE -> --TODO move to lookupQName once the function name in the extension has been changed to a QName
+        checkUniqueness qname (Global.lookupExtensible qname globalTable) where
+          qname = qualifyName (Just (getL moduName scope)) name
 
       SignatureE -> ExtensibleBinder
 

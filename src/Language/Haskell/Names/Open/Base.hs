@@ -44,6 +44,8 @@ data NameContext
       -- ^ Binding of a piece category from composable types
   | BindingP
       -- ^ Binding of a data type piece from composable types
+  | BindingE
+      -- ^ Binding of an extension to an extensible function from composable types
   | ReferenceC
       -- ^ Reference a piece category from composable types
   | ReferenceP
@@ -74,13 +76,14 @@ data Scope = Scope
   , _wcNames :: WcNames
   , _patSynMode :: Maybe PatSynMode
   , _pieceCatName :: Maybe (QName ())
+  , _extensionName :: Maybe (QName ())
   }
 
 makeLens ''Scope
 
 -- | Create an initial scope
 initialScope :: ModuleName () -> Global.Table -> Scope
-initialScope moduleName tbl = Scope moduleName tbl Local.empty Other Nothing [] Nothing Nothing
+initialScope moduleName tbl = Scope moduleName tbl Local.empty Other Nothing [] Nothing Nothing Nothing
 
 -- | Merge local tables of two scopes. The other fields of the scopes are
 -- assumed to be the same.
@@ -183,6 +186,9 @@ binderC = setNameCtx BindingC
 binderP :: Scope -> Scope
 binderP = setNameCtx BindingP
 
+binderE :: Scope -> Scope
+binderE = setNameCtx BindingE
+
 exprC :: Scope -> Scope
 exprC = setNameCtx ReferenceC
 
@@ -197,6 +203,9 @@ setInstClassName m = setL instClassName m
 
 setPieceCatName :: Maybe (QName ()) -> Scope -> Scope
 setPieceCatName m = setL pieceCatName m
+
+setExtensionName :: Maybe (QName ()) -> Scope -> Scope
+setExtensionName m = setL extensionName m
 
 setPatSynMode :: PatSynMode -> Scope -> Scope
 setPatSynMode = setL patSynMode . Just

@@ -102,6 +102,15 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Decl l) where
           <| sc            -: maybeContext
           <| exprC sc      -: category
           <| sc            -: ty
+      CompFunExt l maybeContext function types piece decls ->
+        let sc' = setExtensionName (Just (nameToQName (dropAnn function))) sc
+        in c CompFunExt
+          <| sc'         -: l
+          <| sc'         -: maybeContext
+          <| binderE sc' -: function
+          <| sc'         -: types
+          <| exprP sc'   -: piece
+          <| sc'         -: decls
       _ -> defaultRtraverse e sc
 
 

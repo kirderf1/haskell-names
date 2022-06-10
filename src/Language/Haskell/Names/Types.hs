@@ -143,6 +143,8 @@ data NameInfo l
       -- ^ a reference to the recursive category type in a piece
     | ExtensibleBinder
       -- ^ where a new extensible function is declared
+    | ExtensionBinder
+      -- ^ where a function extension is bound
     | None
       -- ^ no annotation
     | ScopeError  (Error l)

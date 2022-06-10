@@ -45,6 +45,9 @@ lookupCategory qn = filter isCategory . lookupName qn
 lookupPiece :: QName l -> Table -> [Symbol]
 lookupPiece qn = filter isPiece . lookupName qn
 
+lookupExtensible :: QName l -> Table -> [Symbol]
+lookupExtensible qn = filter isExtensible . lookupName qn
+
 lookupName ::  QName l -> Table -> [Symbol]
 lookupName qn table = fromMaybe [] (Map.lookup (dropAnn qn) table)
 
@@ -90,6 +93,11 @@ isCategory symbol = case symbol of
 isPiece :: Symbol -> Bool
 isPiece symbol = case symbol of
     Piece {} -> True
+    _ -> False
+
+isExtensible :: Symbol -> Bool
+isExtensible symbol = case symbol of
+    ExtFunction {} -> True
     _ -> False
 
 fromList :: [(QName (),Symbol)] -> Table
