@@ -50,6 +50,8 @@ data NameContext
       -- ^ Reference a piece category from composable types
   | ReferenceP
       -- ^ Reference a data type piece from composable types
+  | ReferenceE
+      -- ^ Reference an extensible function from composable types
   | SignatureE
       -- ^ Define an extensible function from composable types
   | Other
@@ -194,6 +196,9 @@ exprC = setNameCtx ReferenceC
 
 exprP :: Scope -> Scope
 exprP = setNameCtx ReferenceP
+
+exprE :: Scope -> Scope
+exprE = setNameCtx ReferenceE
 
 signatureE :: Scope -> Scope
 signatureE = setNameCtx SignatureE

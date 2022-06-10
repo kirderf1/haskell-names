@@ -134,6 +134,25 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Type l) where
           <| exprP sc -: pieces
       _ -> defaultRtraverse e (exprT sc)
 
+instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Constraint l) where
+  rtraverse e sc =
+    case e of
+      FunConstraint l extFun var ->
+        c FunConstraint
+          <| sc       -: l
+          <| exprE sc -: extFun
+          <| sc       -: var
+      PieceConstraint l piece var ->
+        c PieceConstraint
+          <| sc       -: l
+          <| exprP sc -: piece
+          <| sc       -: var
+      CategoryConstraint l category var ->
+        c CategoryConstraint
+          <| sc       -: l
+          <| exprC sc -: category
+          <| sc       -: var
+
 instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (DeclHead l) where
   rtraverse e sc =
     case e of
