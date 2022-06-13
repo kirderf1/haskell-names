@@ -1,4 +1,9 @@
-haskell-names [![Build Status](https://travis-ci.org/phischu/haskell-names.svg?branch=master)](https://travis-ci.org/phischu/haskell-names)
+This is a fork of haskell-names that has been changed to work with a modified version of haskell-src-exts.
+If you are looking for the repository of the original haskell-names package, you can find it [here][suite-hsn].
+
+[suite-hsn]: https://github.com/haskell-suite/haskell-names
+
+haskell-names
 =============
 
 haskell-names does name and module resolution for haskell-src-exts AST.
@@ -11,13 +16,10 @@ Namely, it can do the following:
   locally (say, by a `where` clause) or globally (and then give its origin).
   This is called `annotate`.
 
-Installation
-------------
+This specific fork of haskell-names is a part of [composable-types][cty], and has been modified to depend on [kirderf1/haskell-src-exts][hse].
 
-If you're building a development version, then you might also need to install
-a development version of [haskell-src-exts][hse].
-
-[hse]: https://github.com/haskell-suite/haskell-src-exts
+[cty]: https://github.com/kirderf1/composable-types
+[hse]: https://github.com/kirderf1/haskell-src-exts
 
 
 Environments
