@@ -106,30 +106,3 @@ them anyway.
 
 [doc-index]: http://haskell-suite.github.io/docs/haskell-names/
 [Language.haskell.Names]: http://haskell-suite.github.io/docs/haskell-names/Language-Haskell-Names.html
-
-### Known issues
-
-See the [list of all issues][issues].
-
-* haskell-names doesn't perform validation yet. If a module is not valid
-  Haskell, then the behaviour is undefined. See the issues marked as
-  [validation][].
-* Symbol fixities are not recorded ([#1][])
-* Type variables are not resolved ([#2][])
-* Arrows are not fully supported ([#8][])
-
-[issues]: https://github.com/haskell-suite/haskell-names/issues/
-[#1]: https://github.com/haskell-suite/haskell-names/issues/1
-[#2]: https://github.com/haskell-suite/haskell-names/issues/2
-[#8]: https://github.com/haskell-suite/haskell-names/issues/8
-[#32]: https://github.com/haskell-suite/haskell-names/issues/32
-[validation]: https://github.com/haskell-suite/haskell-names/issues?labels=validation&page=1&state=open
-
-Maintainers
------------
-
-[Philipp Schuster](https://github.com/phischu) is the primary maintainer.
-
-[Adam Bergmark](https://github.com/bergmark) is the backup maintainer. Please
-get in touch with him if the primary maintainer cannot be reached.
-
