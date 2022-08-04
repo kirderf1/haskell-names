@@ -90,13 +90,15 @@ data Symbol
     | Piece
       { symbolModule :: ModuleName ()
       , symbolName :: Name ()
-      , categoryName :: QName ()
+      , categoryModule :: ModuleName ()
+      , categoryName :: Name ()
       }
       -- ^ data type piece from composable types
     | ExtFunction
       { symbolModule :: ModuleName ()
       , symbolName :: Name ()
-      , categoryName :: QName ()
+      , categoryModule :: ModuleName ()
+      , categoryName :: Name ()
       }
       -- ^ extensible function from composable types
     deriving (Eq, Ord, Show, Data, Typeable)
