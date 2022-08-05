@@ -75,6 +75,8 @@ instance ToJSON Symbol where
           ,"patternConstructorName" .= prettyName pn]
         Piece { categoryModule = cm, categoryName = cn } ->
           ["categoryModule" .= prettyPrint cm, "categoryName" .= prettyName cn]
+        PieceConstructor { pieceName = piece } ->
+          ["piece" .= prettyName piece]
         ExtFunction { categoryModule = cm, categoryName = cn } ->
           ["categoryModule" .= prettyPrint cm, "categoryName" .= prettyName cn]
         _ -> []
@@ -95,6 +97,7 @@ symbolEntity i = case i of
   PatternSelector {} -> "patternSelector"
   PieceCategory {} -> "pieceCategory"
   Piece {} -> "piece"
+  PieceConstructor {} -> "pieceConstructor"
   ExtFunction {} -> "extensibleFunction"
 
 parseName :: String -> Name ()
@@ -140,6 +143,9 @@ instance FromJSON Symbol where
         catM <- v .: "categoryModule"
         catN <- v .: "categoryName"
         return (Piece symbolmodule symbolname (ModuleName () catM) (parseName catN))
+      "pieceConstructor" -> do
+        piece <- v .: "piece"
+        return (PieceConstructor symbolmodule symbolname (parseName piece))
       "extensibleFunction" -> do
         catM <- v .: "categoryModule"
         catN <- v .: "categoryName"

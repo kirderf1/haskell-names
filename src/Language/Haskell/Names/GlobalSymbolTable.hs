@@ -59,6 +59,7 @@ isValue symbol = case symbol of
     Constructor {} -> True
     PatternConstructor {} -> True
     PatternSelector {} -> True
+    PieceConstructor {} -> True
     ExtFunction {} -> True
     _ -> False
 

@@ -94,6 +94,12 @@ data Symbol
       , categoryName :: Name ()
       }
       -- ^ data type piece from composable types
+    | PieceConstructor
+      { symbolModule :: ModuleName ()
+      , symbolName :: Name ()
+      , pieceName :: Name ()
+      }
+      -- ^ piece constructor from composable types
     | ExtFunction
       { symbolModule :: ModuleName ()
       , symbolName :: Name ()

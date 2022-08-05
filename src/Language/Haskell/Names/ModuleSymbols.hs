@@ -112,7 +112,9 @@ getTopDeclSymbols impTbl modulename d = (case d of
     PieceDecl _ category pieceName qualConDecls -> piece : infos where
         piece = Piece (dropAnn modulename) (dropAnn pieceName) catModule (dropAnn $ qNameToName category)
         catModule = fromMaybe (dropAnn modulename) $ nameQualification category
-        infos = constructorsToInfos modulename pieceName $ qualConDeclNames qualConDecls
+        infos = toPieceConstructor <$> constructorsToInfos modulename pieceName (qualConDeclNames qualConDecls)
+        toPieceConstructor (Constructor n1 n2 n3) = PieceConstructor n1 n2 n3
+        toPieceConstructor symbol                 = symbol
 
     CompFunDecl _ names _ category _ -> map nameToInfo names where
         nameToInfo name = ExtFunction (dropAnn modulename) (dropAnn name) catModule (dropAnn $ qNameToName category)
