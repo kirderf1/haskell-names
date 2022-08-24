@@ -111,18 +111,24 @@ getTopDeclSymbols impTbl modulename d = (case d of
 
     PieceDecl _ category pieceName qualConDecls -> piece : infos where
         piece = Piece (dropAnn modulename) (dropAnn pieceName) catModule (dropAnn $ qNameToName category)
-        catModule = fromMaybe (dropAnn modulename) $ nameQualification category
+        catModule = moduleForCat impTbl modulename category
         infos = toPieceConstructor <$> constructorsToInfos modulename pieceName (qualConDeclNames qualConDecls)
         toPieceConstructor (Constructor n1 n2 n3) = PieceConstructor n1 n2 n3
         toPieceConstructor symbol                 = symbol
 
     CompFunDecl _ names _ category _ -> map nameToInfo names where
         nameToInfo name = ExtFunction (dropAnn modulename) (dropAnn name) catModule (dropAnn $ qNameToName category)
-        catModule = fromMaybe (dropAnn modulename) $ nameQualification category
+        catModule = moduleForCat impTbl modulename category
 
     _ -> [])
         where
             declHeadSymbol c dh = c (dropAnn modulename) (dropAnn (getDeclHeadName dh))
+
+moduleForCat :: Global.Table -> ModuleName l -> QName l -> ModuleName ()
+moduleForCat impTbl modulename category =
+    case Global.lookupCategory category impTbl of
+            [symbol] -> symbolModule symbol  -- the category is imported from a singular module
+            _ -> dropAnn modulename -- the category comes from either this module or multible imported modules
 
 -- | Takes a type name and a list of constructor names paired with selector names. Returns
 --   all symbols i.e. constructors and selectors.
