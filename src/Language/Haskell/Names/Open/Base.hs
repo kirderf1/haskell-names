@@ -44,8 +44,6 @@ data NameContext
       -- ^ Binding of a piece category from composable types
   | BindingP
       -- ^ Binding of a data type piece from composable types
-  | BindingE
-      -- ^ Binding of an extension to an extensible function from composable types
   | ReferenceC
       -- ^ Reference a piece category from composable types
   | ReferenceP
@@ -187,9 +185,6 @@ binderC = setNameCtx BindingC
 
 binderP :: Scope -> Scope
 binderP = setNameCtx BindingP
-
-binderE :: Scope -> Scope
-binderE = setNameCtx BindingE
 
 exprC :: Scope -> Scope
 exprC = setNameCtx ReferenceC

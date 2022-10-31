@@ -161,10 +161,6 @@ lookupName name scope = Scoped nameInfo (ann name) where
 
       BindingP -> PieceBinder
 
-      BindingE -> --TODO move to lookupQName once the function name in the extension has been changed to a QName
-        checkUniqueness qname (Global.lookupExtensible qname globalTable) where
-          qname = qualifyName (Just (getL moduName scope)) name
-
       SignatureE -> ExtensibleBinder
 
       _ -> None
