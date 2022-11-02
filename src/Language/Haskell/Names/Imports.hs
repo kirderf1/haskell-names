@@ -244,6 +244,7 @@ resolveImportSpec mod isHiding symbols spec =
         NewType {} -> True
         DataFam {} -> True
         Class   {} -> True
+        Piece   {} -> True
         _ -> False
 
 ann2syms :: Annotated a => a (Scoped l) -> Either (Error l) ([Symbol])
