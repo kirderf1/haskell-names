@@ -109,7 +109,8 @@ getTopDeclSymbols impTbl modulename d = (case d of
 
     PieceCatDecl _ category -> [ PieceCategory (dropAnn modulename) (dropAnn category) ]
 
-    PieceDecl _ category pieceName qualConDecls -> piece : infos where
+    PieceDecl _ category _ declHead qualConDecls -> piece : infos where
+        pieceName = getDeclHeadName declHead
         piece = Piece (dropAnn modulename) (dropAnn pieceName) catModule (dropAnn $ qNameToName category)
         catModule = moduleForCat impTbl modulename category
         infos = toPieceConstructor <$> constructorsToInfos modulename pieceName (qualConDeclNames qualConDecls)

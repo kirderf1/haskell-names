@@ -88,12 +88,13 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Decl l) where
         c PieceCatDecl
           <| sc         -: l
           <| binderC sc -: category
-      PieceDecl l category pieceName cons ->
+      PieceDecl l category context declHead cons ->
         let sc' = setPieceCatName (Just (dropAnn category)) sc
         in c PieceDecl
           <| sc'         -: l
           <| exprC sc'   -: category
-          <| binderP sc' -: pieceName
+          <| sc'         -: context
+          <| sc'         -: declHead
           <| sc'         -: cons
       CompFunDecl l names maybeContext category ty ->
         c CompFunDecl
