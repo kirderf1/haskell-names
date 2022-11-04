@@ -72,6 +72,7 @@ isType symbol = case symbol of
     DataFam {} -> True
     Class   {} -> True
     Piece   {} -> True -- Added for export annotations
+    PieceCategory {} -> True -- Added for export annotations
     _ -> False
 
 isMethodOrAssociated :: Symbol -> Bool
