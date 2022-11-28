@@ -138,10 +138,11 @@ instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Type l) where
 instance (Resolvable l, SrcInfo l, D.Data l) => Resolvable (Constraint l) where
   rtraverse e sc =
     case e of
-      FunConstraint l extFun var ->
+      FunConstraint l extFun types var ->
         c FunConstraint
           <| sc       -: l
           <| exprE sc -: extFun
+          <| sc       -: types
           <| sc       -: var
       PieceConstraint l piece var ->
         c PieceConstraint
